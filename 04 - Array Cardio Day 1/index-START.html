@@ -38,16 +38,41 @@
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
 
+    const oldInventor = inventors.filter(year => year.year <= 1599 && year.year > 1500)
+    console.table(oldInventor)
+
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const names = inventors.map(inventor => inventor.first + '' + inventor.last)
+    console.table(names)
+
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const sortedArray = inventors.sort((a, b) => a.year - b.year)
+    console.table(sortedArray)
+
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const addUpYear = inventors.reduce((acc, cv) => acc + cv.year, 0)
+    const addUpDeath = inventors.reduce((acc, cv) => acc + cv.passed, 0)
+    function yearsLived() {
+      return addUpDeath - addUpYear
+    }
+    console.table(yearsLived())
+
 
     // 5. Sort the inventors by years lived
+
+    const ageLived = inventors.map(invent => {
+      return {
+        ...invent,
+        yearsLived: invent.passed - invent.year
+      }
+    })
+    const sortedYearsLived = ageLived.sort((a, b) =>  b.yearsLived - a.yearsLived)
+    console.table(sortedYearsLived)
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -55,10 +80,25 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const order = people.sort(function(lastOne, nextOne) {
+      const [alast, afirst] = lastOne.split(', ')
+      const [blast, bfirst] = nextOne.split(', ')
+      return alast > blast ? 1 : -1 
+    })
+    console.table(order)
+
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const car = data.reduce((acc, cv) => acc + (cv === 'car'),0)
+    const truck = data.reduce((acc, cv) => acc + (cv === 'truck'),0)
+    const bike = data.reduce((acc, cv) => acc + (cv === 'bike'),0)
+    const van = data.reduce((acc, cv) => acc + (cv === 'van'),0)
+    const walk = data.reduce((acc, cv) => acc + (cv === 'walk'),0)
+
+    console.log(car, truck, bike, van, walk)
 
   </script>
 </body>
